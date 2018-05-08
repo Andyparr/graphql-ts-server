@@ -1,0 +1,25 @@
+# import Response, Date from '../../shared.graphql'
+
+type User {
+  id: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  registeredAt: Date!
+  confirmed: Boolean!
+}
+
+type Query {
+  getAllUsers: [User!]!
+}
+
+type Mutation {
+  register(
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+  ): [Response!]!
+  deleteUser(id: String!): Response!
+}

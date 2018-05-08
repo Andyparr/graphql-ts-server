@@ -1,0 +1,9 @@
+# import Response from '../../shared.graphql'
+
+type Query {
+  hello: String
+}
+
+type Mutation {
+  login(email: String!, password: String!): [Response!]!
+}
