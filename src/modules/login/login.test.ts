@@ -3,6 +3,7 @@ import { User } from '../../entity/User'
 
 import { createTypeormConnection } from '../../utils/createTypeormConnection'
 import { invalidLogin, confirmEmailError } from './errorMessages'
+import { Connection } from 'typeorm'
 
 const validFirstName = 'Test'
 const validLastName = 'Test'
@@ -55,8 +56,14 @@ const loginExpectError = async (
   })
 }
 
+let connection: Connection
+
 beforeAll(async () => {
-  await createTypeormConnection()
+  connection = await createTypeormConnection()
+})
+
+afterAll(async () => {
+  connection.close()
 })
 
 describe('login', () => {

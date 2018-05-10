@@ -7,6 +7,7 @@ import {
   passwordNotLongEnough
 } from './errorMessages'
 import { createTypeormConnection } from '../../utils/createTypeormConnection'
+import { Connection } from 'typeorm'
 
 const validFirstName = 'Test'
 const validLastName = 'Test'
@@ -27,9 +28,14 @@ mutation {
   }
 }
 `
+let connection: Connection
 
 beforeAll(async () => {
-  await createTypeormConnection()
+  connection = await createTypeormConnection()
+})
+
+afterAll(async () => {
+  connection.close()
 })
 
 describe('Resgister user', async () => {
