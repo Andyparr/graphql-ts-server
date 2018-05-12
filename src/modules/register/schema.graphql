@@ -1,14 +1,4 @@
-# import Response, Date from '../../shared.graphql'
-
-type User {
-  id: String!
-  firstName: String!
-  lastName: String!
-  email: String!
-  password: String!
-  registeredAt: Date!
-  confirmed: Boolean!
-}
+# import User, Response, Date from '../../shared.graphql'
 
 type Query {
   getAllUsers: [User!]!

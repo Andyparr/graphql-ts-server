@@ -24,6 +24,7 @@ interface IQuery {
 __typename: "Query";
 getAllBooks: Array<IBook>;
 hello: string | null;
+me: IUser | null;
 getAllUsers: Array<IUser>;
 }
 
@@ -92,6 +93,8 @@ __typename: "Response";
 ok: string;
 path: string | null;
 message: string;
+token: string | null;
+refreshToken: string | null;
 }
 }
 

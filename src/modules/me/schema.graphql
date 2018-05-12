@@ -1,0 +1,5 @@
+# import User from '../../shared.graphql'
+
+type Query {
+  me: User
+}
