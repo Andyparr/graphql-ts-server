@@ -1,4 +1,3 @@
-import { request } from 'graphql-request'
 import { User } from '../../entity/User'
 import {
   duplicateEmail,
@@ -8,26 +7,13 @@ import {
 } from './errorMessages'
 import { createTypeormConnection } from '../../utils/createTypeormConnection'
 import { Connection } from 'typeorm'
+import { TestClient } from '../../utils/TestClient'
 
 const validFirstName = 'Test'
 const validLastName = 'Test'
 const validEmail = 'test@email.com'
 const validPassword = 'testpassword'
 
-const mutation = (
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string
-) => `
-mutation {
-  register(firstName: "${firstName}" lastName: "${lastName}" email: "${email}", password: "${password}") {
-    ok
-    path
-    message
-  }
-}
-`
 let connection: Connection
 
 beforeAll(async () => {
@@ -40,11 +26,14 @@ afterAll(async () => {
 
 describe('Resgister user', async () => {
   test('Register user successfully', async () => {
-    const response: any = await request(
-      process.env.TEST_HOST as string,
-      mutation(validFirstName, validLastName, validEmail, validPassword)
+    const client = new TestClient(process.env.TEST_HOST as string)
+    const response = await client.register(
+      validFirstName,
+      validLastName,
+      validEmail,
+      validPassword
     )
-    expect(response.register[0]).toEqual({
+    expect(response.data.register[0]).toEqual({
       ok: '👍',
       path: null,
       message: 'User has been registered successfully'
@@ -57,12 +46,15 @@ describe('Resgister user', async () => {
   })
 
   test('Register user with duplicate email', async () => {
-    const response: any = await request(
-      process.env.TEST_HOST as string,
-      mutation(validFirstName, validLastName, validEmail, validPassword)
+    const client = new TestClient(process.env.TEST_HOST as string)
+    const response = await client.register(
+      validFirstName,
+      validLastName,
+      validEmail,
+      validPassword
     )
-    expect(response.register).toHaveLength(1)
-    expect(response.register[0]).toEqual({
+    expect(response.data.register).toHaveLength(1)
+    expect(response.data.register[0]).toEqual({
       ok: '👎',
       path: 'email',
       message: duplicateEmail
@@ -70,11 +62,14 @@ describe('Resgister user', async () => {
   })
 
   test('Invalid email error', async () => {
-    const response: any = await request(
-      process.env.TEST_HOST as string,
-      mutation(validFirstName, validLastName, 'te', validPassword)
+    const client = new TestClient(process.env.TEST_HOST as string)
+    const response = await client.register(
+      validFirstName,
+      validLastName,
+      'as',
+      validPassword
     )
-    expect(response).toEqual({
+    expect(response.data).toEqual({
       register: [
         {
           ok: '👎',
@@ -91,11 +86,14 @@ describe('Resgister user', async () => {
   })
 
   test('Invalid password error', async () => {
-    const response: any = await request(
-      process.env.TEST_HOST as string,
-      mutation(validFirstName, validLastName, validEmail, 'te')
+    const client = new TestClient(process.env.TEST_HOST as string)
+    const response = await client.register(
+      validFirstName,
+      validLastName,
+      validEmail,
+      'te'
     )
-    expect(response).toEqual({
+    expect(response.data).toEqual({
       register: [
         {
           ok: '👎',
@@ -107,11 +105,14 @@ describe('Resgister user', async () => {
   })
 
   test('Invalid email and password error', async () => {
-    const response: any = await request(
-      process.env.TEST_HOST as string,
-      mutation(validFirstName, validLastName, 'te', 'te')
+    const client = new TestClient(process.env.TEST_HOST as string)
+    const response = await client.register(
+      validFirstName,
+      validLastName,
+      'te',
+      'te'
     )
-    expect(response).toEqual({
+    expect(response.data).toEqual({
       register: [
         {
           ok: '👎',
