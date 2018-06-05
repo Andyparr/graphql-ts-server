@@ -1,9 +1,3 @@
-# import User, Response, Date from '../../shared.graphql'
-
-type Query {
-  getAllUsers: [User!]!
-}
-
 type Mutation {
   register(
     firstName: String!

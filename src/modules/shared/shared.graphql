@@ -15,3 +15,7 @@ type Response {
 }
 
 scalar Date
+
+type Query {
+  getAllUsers: [User!]!
+}

@@ -1,23 +1,24 @@
-import { User } from '../../entity/User'
+import * as faker from 'faker'
+import { Connection } from 'typeorm'
+import { createTestConnection } from '../../testUtils/createTestConnection'
 import {
   duplicateEmail,
   emailNotLongEnough,
   invalidEmail,
   passwordNotLongEnough
 } from './errorMessages'
-import { createTypeormConnection } from '../../utils/createTypeormConnection'
-import { Connection } from 'typeorm'
 import { TestClient } from '../../utils/TestClient'
+import { User } from '../../entity/User'
 
-const validFirstName = 'Test'
-const validLastName = 'Test'
-const validEmail = 'test@email.com'
-const validPassword = 'testpassword'
+const validFirstName = faker.name.firstName()
+const validLastName = faker.name.lastName()
+const validEmail = faker.internet.email()
+const validPassword = faker.internet.password()
 
 let connection: Connection
 
 beforeAll(async () => {
-  connection = await createTypeormConnection()
+  connection = await createTestConnection()
 })
 
 afterAll(async () => {
@@ -38,7 +39,7 @@ describe('Resgister user', async () => {
       path: null,
       message: 'User has been registered successfully'
     })
-    const users = await User.find({ where: { validEmail } })
+    const users = await User.find({ where: { email: validEmail } })
     expect(users).toHaveLength(1)
     const user = users[0]
     expect(user.email).toEqual(validEmail)

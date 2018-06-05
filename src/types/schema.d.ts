@@ -23,8 +23,6 @@ column: number;
 interface IQuery {
 __typename: "Query";
 getAllBooks: Array<IBook>;
-hello: string | null;
-dummy: string | null;
 me: IUser | null;
 getAllUsers: Array<IUser>;
 }
@@ -54,7 +52,7 @@ addBook: IResponse;
 deleteBook: IResponse;
 updateBook: IResponse;
 login: Array<IResponse>;
-logout: boolean | null;
+logout: boolean;
 register: Array<IResponse>;
 deleteUser: IResponse;
 }

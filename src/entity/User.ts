@@ -1,11 +1,11 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  BaseEntity,
-  BeforeInsert
-} from 'typeorm'
 import * as bcrypt from 'bcryptjs'
+import {
+  BaseEntity,
+  BeforeInsert,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn
+} from 'typeorm'
 @Entity('users')
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string

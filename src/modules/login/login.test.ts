@@ -1,18 +1,19 @@
+import * as faker from 'faker'
+import { confirmEmailError, invalidLogin } from './errorMessages'
 import { Connection } from 'typeorm'
-import { User } from '../../entity/User'
-import { createTypeormConnection } from '../../utils/createTypeormConnection'
-import { invalidLogin, confirmEmailError } from './errorMessages'
+import { createTestConnection } from '../../testUtils/createTestConnection'
 import { TestClient } from '../../utils/TestClient'
+import { User } from '../../entity/User'
 
-const validFirstName = 'Test'
-const validLastName = 'Test'
-const validEmail = 'test@email.com'
-const validPassword = 'testpassword'
+const validFirstName = faker.name.firstName()
+const validLastName = faker.name.lastName()
+const validEmail = faker.internet.email()
+const validPassword = faker.internet.password()
 
 let connection: Connection
 
 beforeAll(async () => {
-  connection = await createTypeormConnection()
+  connection = await createTestConnection()
 })
 
 afterAll(async () => {

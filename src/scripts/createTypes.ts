@@ -1,7 +1,6 @@
-import { generateNamespace } from '@gql2ts/from-schema'
 import * as fs from 'fs'
 import * as path from 'path'
-
+import { generateNamespace } from '@gql2ts/from-schema'
 import { genSchema } from '../utils/genSchema'
 
 const typescriptTypes = generateNamespace('GQL', genSchema())

@@ -1,17 +1,18 @@
+import * as faker from 'faker'
 import { Connection } from 'typeorm'
-import { createTypeormConnection } from '../../utils/createTypeormConnection'
-import { User } from '../../entity/User'
+import { createTestConnection } from '../../testUtils/createTestConnection'
 import { TestClient } from '../../utils/TestClient'
+import { User } from '../../entity/User'
 
 let connection: Connection
-const firstName = 'testfirstname'
-const lastName = 'testlastname'
-const email = 'test@test.com'
-const password = 'testpassword'
+const firstName = faker.name.firstName()
+const lastName = faker.name.lastName()
+const email = faker.internet.email()
+const password = faker.internet.password()
 
 let userId: string
 beforeAll(async () => {
-  connection = await createTypeormConnection()
+  connection = await createTestConnection()
   const user = await User.create({
     firstName,
     lastName,
