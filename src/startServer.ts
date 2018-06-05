@@ -31,7 +31,7 @@ export const startServer = async () => {
       store: new RedisStore({
         client: redis as any,
         prefix: redisSessionPrefix
-      }),
+      }) as any,
       name: 'qid',
       secret: SESSION_SECRET,
       resave: false,
@@ -41,7 +41,7 @@ export const startServer = async () => {
         secure: process.env.NODE_ENV === 'production',
         maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
       }
-    } as any)
+    })
   )
 
   const cors = {
